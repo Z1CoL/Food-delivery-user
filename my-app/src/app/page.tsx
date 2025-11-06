@@ -1,4 +1,5 @@
-import RegisterPage from "@/_components/login";
+import LoginPage from "@/app/login/page";
+import RegisterPage from "@/app/login/page";
 import Image from "next/image";
 
 export default function Home() {

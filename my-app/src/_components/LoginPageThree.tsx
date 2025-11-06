@@ -5,40 +5,12 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export default function RegisterPage() {
+export default function LoginPageThree() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const handleRegister = async () => {
-    if (password !== confirm) {
-      alert("❌ Нууц үг таарахгүй байна");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const res = await fetch("http://localhost:5000/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert("✅ Амжилттай бүртгэгдлээ");
-        console.log(data);
-      } else {
-        alert("❌ " + data.message);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-6">
@@ -96,11 +68,7 @@ export default function RegisterPage() {
               </label>
             </div>
 
-            <Button
-              className="w-full"
-              disabled={loading}
-              onClick={handleRegister}
-            >
+            <Button className="w-full" disabled={loading}>
               {loading ? "Loading..." : "Let's Go"}
             </Button>
 
@@ -116,12 +84,7 @@ export default function RegisterPage() {
         {/* Right: image */}
         <div className="hidden md:block relative">
           <div className="absolute inset-6 rounded-xl overflow-hidden">
-            <Image
-              src="/images/hero.png"
-              alt="Delivery rider on bike"
-              fill
-              style={{ objectFit: "cover" }}
-            />
+            <Image src="/images/hero.png" alt="Delivery rider on bike" fill />
           </div>
         </div>
       </div>
