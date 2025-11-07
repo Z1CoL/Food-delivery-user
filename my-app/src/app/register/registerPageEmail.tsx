@@ -23,17 +23,12 @@ export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
     e.preventDefault();
 
     if (!email) {
-      setError("empty field");
-      return;
-    }
-
-    if (!emailRegex.test(email)) {
-      setError("incorrect email");
+      setError("empty field or incorrect password");
       return;
     }
 
     setError("");
-    handleNext(email); // ✅ дараагийн хуудсанд email дамжуулна
+    handleNext(email); // email damijuulj baigaa 
   };
 
   return (

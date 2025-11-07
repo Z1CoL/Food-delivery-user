@@ -94,7 +94,7 @@ export default function RegisterPageTwo({
               )}
             </div>
 
-            {/* ✅ Show Password Checkbox */}
+            {/* Show Password Checkbox */}
             <label className="flex items-center gap-2 text-sm text-[#71717A] mt-1 cursor-pointer select-none">
               <input
                 type="checkbox"
