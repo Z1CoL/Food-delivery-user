@@ -18,11 +18,11 @@ export default function RegisterPageTwo({
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!password || !confirm) {
-      setError("empty field");
+      setError("Empty field");
       return;
     }
 
@@ -42,17 +42,17 @@ export default function RegisterPageTwo({
 
   return (
     <div className="flex items-center justify-center w-full h-screen">
-      <div className="">
+      <div>
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-6 items-start"
         >
           {/* Back button */}
           <Image
-            src={"/chevron-left.svg"}
+            src="/chevron-left.svg"
             height={16}
             width={16}
-            alt=""
+            alt="Back"
             onClick={handleBack}
             className="w-9 h-9 p-2 border-2 rounded-[5px] items-center justify-center cursor-pointer hover:bg-gray-100"
           />
@@ -71,7 +71,10 @@ export default function RegisterPageTwo({
               <Input
                 type={showPassword ? "text" : "password"}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError("");
+                }}
                 className={`text-[#71717A] ${
                   error ? "border-red-500 focus-visible:ring-red-500" : ""
                 }`}
@@ -83,7 +86,10 @@ export default function RegisterPageTwo({
               <Input
                 type={showPassword ? "text" : "password"}
                 value={confirm}
-                onChange={(e) => setConfirm(e.target.value)}
+                onChange={(e) => {
+                  setConfirm(e.target.value);
+                  setError("");
+                }}
                 className={`text-[#71717A] ${
                   error ? "border-red-500 focus-visible:ring-red-500" : ""
                 }`}
@@ -106,10 +112,11 @@ export default function RegisterPageTwo({
             </label>
           </div>
 
-          {/* Button */}
+          {/* Continue Button */}
           <div className="flex items-start gap-3">
             <button
               type="submit"
+              disabled={!password || !confirm || !!error}
               className={`flex text-white items-center justify-center gap-2 w-[416px] h-9 rounded-[6px] transition ${
                 password && confirm && !error
                   ? "bg-black hover:opacity-80"

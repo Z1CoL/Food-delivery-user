@@ -15,26 +15,32 @@ export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    setError("");
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email) {
-      setError("empty field or incorrect password");
+      setError("Email field is empty");
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setError("Invalid email format");
       return;
     }
 
     setError("");
-    handleNext(email); // email damijuulj baigaa 
+    handleNext(email);
   };
 
   return (
     <div className="flex items-center justify-center w-full h-screen">
       {/* LEFT SIDE */}
-      <div className="">
+      <div>
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-6 items-start"
@@ -44,9 +50,10 @@ export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
             height={16}
             width={16}
             alt=""
-            className="w-9 h-9 p-2 border-2 rounded-[5px] items-center justify-center"
+            className="w-9 h-9 p-2 border-2 rounded-[5px] items-center justify-center cursor-not-allowed opacity-30"
           />
 
+          {/* Title */}
           <div className="flex flex-col items-start gap-1">
             <span className="font-semibold text-2xl">Create your account</span>
             <span className="font-normal text-[16px] text-[#71717A]">
@@ -54,13 +61,13 @@ export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
             </span>
           </div>
 
-          {/* Input */}
+          {/* Email input */}
           <div className="flex flex-col gap-1 w-[416px]">
             <Input
               type="email"
               value={email}
               onChange={handleChange}
-              className={`flex flex-col items-start gap-4 text-[#71717A] ${
+              className={`text-[#71717A] ${
                 error ? "border-red-500 focus-visible:ring-red-500" : ""
               }`}
               placeholder="Enter your email address"
