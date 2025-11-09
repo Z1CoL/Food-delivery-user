@@ -5,18 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-interface RegisterPageOneProps {
-  handleNext: (email: string) => void;
-}
-
-export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
+export default function LoginUI() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    setError("");
+  };
+
+  const handlePsswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
     setError("");
   };
 
@@ -24,17 +24,11 @@ export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
     e.preventDefault();
 
     if (!email) {
-      setError("Email field is empty");
-      return;
-    }
-
-    if (!emailRegex.test(email)) {
-      setError("Invalid email format");
+      setError("email or password wrong");
       return;
     }
 
     setError("");
-    handleNext(email);
   };
 
   return (
@@ -55,9 +49,9 @@ export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
 
           {/* Title */}
           <div className="flex flex-col items-start gap-1">
-            <span className="font-semibold text-2xl">Create your account</span>
+            <span className="font-semibold text-2xl">Log in</span>
             <span className="font-normal text-[16px] text-[#71717A]">
-              Sign up to explore your favorite dishes.
+              Log in to enjoy your favorite dishes.
             </span>
           </div>
 
@@ -66,7 +60,7 @@ export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
             <Input
               type="email"
               value={email}
-              onChange={handleChange}
+              onChange={handleEmailChange}
               className={`text-[#71717A] ${
                 error ? "border-red-500 focus-visible:ring-red-500" : ""
               }`}
@@ -75,7 +69,22 @@ export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
             {error && (
               <span className="text-red-500 text-sm ml-1">{error}</span>
             )}
+
+            <Input
+              type="password"
+              value={password}
+              onChange={handlePsswordChange}
+              className={`text-[#71717A] ${
+                error ? "border-red-500 focus-visible:ring-red-500" : ""
+              }`}
+              placeholder="Password"
+            />
+            {error && (
+              <span className="text-red-500 text-sm ml-1">{error}</span>
+            )}
           </div>
+
+          <button className="underline   ">Forgot password ?</button>
 
           {/* Button */}
           <div className="flex items-start gap-3">
@@ -92,9 +101,9 @@ export default function RegisterPageOne({ handleNext }: RegisterPageOneProps) {
           </div>
 
           <span className="flex justify-center items-center gap-3 w-[416px] font-normal text-[16px] text-[#71717A]">
-            Already have an account?
+            Don't have an account?
             <Link href={"/Register"} className="text-blue-500">
-              Log in
+              Sign up
             </Link>
           </span>
         </form>

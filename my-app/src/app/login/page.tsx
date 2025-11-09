@@ -1,49 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import axios from "axios";
-import RegisterPageOne from "../register/registerPageEmail";
-import PageTwo from "../register/registerPagePassword";
 import Image from "next/image";
+import LoginUI from "./loginPage";
 
-export default function RegisterPage() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [emailValue, setEmailValue] = useState("");
-
-  const handleNextFromEmail = (email: string) => {
-    setEmailValue(email);
-    setCurrentPage(1);
-  };
-
-  const handleNextFromPassword = async (password: string) => {
-    const res = await axios.post("http://localhost:5000/api/users/register", {
-      email: emailValue,
-      password,
-    });
-
-    if (res.data.token) {
-      localStorage.setItem("token", res.data.token);
-    } else {
-      alert(res.data.message || "Registration failed");
-    }
-  };
-
-  const handleBack = () => {
-    setCurrentPage(0);
-  };
-
+export default function LoginPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       {/* LEFT SIDE — FORM */}
       <div className="flex-1 flex items-center justify-center">
-        {currentPage === 0 ? (
-          <RegisterPageOne handleNext={handleNextFromEmail} />
-        ) : (
-          <PageTwo
-            handleBack={handleBack}
-            handleNext={handleNextFromPassword}
-          />
-        )}
+        <LoginUI />
       </div>
 
       {/* RIGHT SIDE — IMAGE */}

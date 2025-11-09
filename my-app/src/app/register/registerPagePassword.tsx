@@ -2,6 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 interface RegisterPageTwoProps {
@@ -126,6 +127,13 @@ export default function RegisterPageTwo({
               Continue
             </button>
           </div>
+
+          <span className="flex justify-center items-center gap-3 w-[416px] font-normal text-[16px] text-[#71717A]">
+            Already have an account?
+            <Link href={"/Login"} className="text-blue-500">
+              Log in
+            </Link>
+          </span>
         </form>
       </div>
     </div>

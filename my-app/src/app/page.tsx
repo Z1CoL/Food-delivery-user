@@ -1,6 +1,4 @@
-import LoginPage from "@/app/login/page";
-import RegisterPage from "@/app/login/page";
-import Image from "next/image";
+import RegisterPage from "./Register/page";
 
 export default function Home() {
   return (
