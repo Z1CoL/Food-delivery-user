@@ -1,39 +1,60 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginUI() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const router = useRouter();
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-    setError("");
-  };
-
-  const handlePsswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-    setError("");
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  // LOGIN FUNCTION
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email) {
-      setError("email or password wrong");
+    if (!email || !password) {
+      setError("!");
       return;
     }
 
-    setError("");
+    try {
+      setLoading(true);
+      setError("");
+
+      const res = await axios.post("http://localhost:5000/api/users/login", {
+        email,
+        password,
+      });
+
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("role", res.data.user.role);
+
+        if (res.data.user.role === "ADMIN") {
+          router.push("/AdminHomePage");
+        } else {
+          router.push("/UserHomePage");
+        }
+      } else {
+        setError(res.data.message || "nevterhed aldaa garla");
+      }
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message || "servertei holbogdohod aldaa garlaa";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex items-center justify-center w-full h-screen">
-      {/* LEFT SIDE */}
       <div>
         <form
           onSubmit={handleSubmit}
@@ -55,54 +76,67 @@ export default function LoginUI() {
             </span>
           </div>
 
-          {/* Email input */}
-          <div className="flex flex-col gap-1 w-[416px]">
+          {/* Email + Password */}
+          <div className="flex flex-col gap-3 w-[416px]">
             <Input
               type="email"
               value={email}
-              onChange={handleEmailChange}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError("");
+              }}
               className={`text-[#71717A] ${
                 error ? "border-red-500 focus-visible:ring-red-500" : ""
               }`}
               placeholder="Enter your email address"
             />
-            {error && (
-              <span className="text-red-500 text-sm ml-1">{error}</span>
-            )}
 
             <Input
               type="password"
               value={password}
-              onChange={handlePsswordChange}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
               className={`text-[#71717A] ${
                 error ? "border-red-500 focus-visible:ring-red-500" : ""
               }`}
               placeholder="Password"
             />
+
+            {/* Алдааны мессеж */}
             {error && (
               <span className="text-red-500 text-sm ml-1">{error}</span>
             )}
           </div>
 
-          <button className="underline   ">Forgot password ?</button>
+          {/* Forgot password */}
+          <button
+            type="button"
+            className="underline text-sm text-gray-500 hover:text-black transition"
+          >
+            Forgot password?
+          </button>
 
           {/* Button */}
           <div className="flex items-start gap-3">
             <button
               type="submit"
+              disabled={loading}
               className={`flex text-white items-center justify-center gap-2 w-[416px] h-9 rounded-[6px] transition ${
-                email && !error
+                email && password && !loading
                   ? "bg-black hover:opacity-80"
                   : "bg-black opacity-[0.2] cursor-not-allowed"
               }`}
             >
-              Let's Go
+              {loading ? "Logging in..." : "Let's Go"}
             </button>
           </div>
 
+          {/* Signup Link */}
           <span className="flex justify-center items-center gap-3 w-[416px] font-normal text-[16px] text-[#71717A]">
             Don't have an account?
-            <Link href={"/Register"} className="text-blue-500">
+            <Link href={"/register"} className="text-blue-500 hover:underline">
               Sign up
             </Link>
           </span>

@@ -130,7 +130,7 @@ export default function RegisterPageTwo({
 
           <span className="flex justify-center items-center gap-3 w-[416px] font-normal text-[16px] text-[#71717A]">
             Already have an account?
-            <Link href={"/Login"} className="text-blue-500">
+            <Link href={"/login"} className="text-blue-500">
               Log in
             </Link>
           </span>

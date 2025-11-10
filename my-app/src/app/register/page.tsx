@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
-import RegisterPageOne from "./registerPageEmail";
-import PageTwo from "./registerPagePassword";
 import Image from "next/image";
+import axios from "axios";
+import RegisterPageOne from "../../_components/RegisterPageOne";
+import RegisterPageTwo from "../../_components/RegisterPageTwo";
 
 export default function RegisterPage() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -39,7 +39,7 @@ export default function RegisterPage() {
         {currentPage === 0 ? (
           <RegisterPageOne handleNext={handleNextFromEmail} />
         ) : (
-          <PageTwo
+          <RegisterPageTwo
             handleBack={handleBack}
             handleNext={handleNextFromPassword}
           />
