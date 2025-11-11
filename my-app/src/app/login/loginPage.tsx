@@ -45,8 +45,8 @@ export default function LoginUI() {
         setError(res.data.message || "nevterhed aldaa garla");
       }
     } catch (err: any) {
-      const message =
-        err?.response?.data?.message || "servertei holbogdohod aldaa garlaa";
+      console.log("alda", { err });
+      const message = err?.response?.data?.message || "error";
       setError(message);
     } finally {
       setLoading(false);
