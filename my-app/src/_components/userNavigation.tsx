@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default function UserNavigation() {
@@ -63,43 +64,6 @@ export default function UserNavigation() {
             </button>
           </div>
         </div>
-      </div>
-
-      <div className="w-full -z-10">
-        {[...Array(7)].map((_, index) => (
-          <div
-            key={index}
-            className="inline-flex -rotate-6 flex-col justify-center items-start gap-[-42px]"
-          >
-            <div className="flex items-center gap-35 opacity-40">
-              <span className="w-[161px] items-center text-[129px] font-normal text-[#71717A]">
-                Say
-              </span>
-
-              <span className="w-[161px] items-center text-[129px] font-normal text-[#71717A]">
-                cheese
-              </span>
-
-              <span className="w-[161px] items-center text-[129px] font-normal text-[#FD543F]">
-                ·
-              </span>
-
-              <div className="flex items-center gap-35 opacity-40">
-                <span className="w-[161px] items-center text-[129px] font-normal text-[#FD543F]">
-                  Fresh
-                </span>
-
-                <span className="w-[161px] items-center text-[129px] font-normal text-[#71717A]">
-                  Fast
-                </span>
-
-                <span className="w-[161px] items-center text-[129px] font-normal text-[#FD543F]">
-                  Delivered!
-                </span>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );
